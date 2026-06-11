@@ -1,0 +1,40 @@
+import type { Doctor } from "@/types/entities";
+
+export const doctors: Doctor[] = [
+  {
+    id: "doc-001",
+    slug: "ananya-rao",
+    name: "Dr. Ananya Rao",
+    role: "Chief Dental Surgeon",
+    specialty: "Implantology and Smile Design",
+    experience: "14 years",
+    credentials: "MDS, Fellowship in Oral Implantology",
+    availability: "Mon, Wed, Fri",
+    languages: ["English", "Hindi", "Tamil"],
+    bio: "Leads complex restorative cases with a calm, patient-first approach and digitally guided treatment planning.",
+  },
+  {
+    id: "doc-002",
+    slug: "vikram-menon",
+    name: "Dr. Vikram Menon",
+    role: "Senior Orthodontist",
+    specialty: "Clear Aligners and Bite Correction",
+    experience: "11 years",
+    credentials: "MDS Orthodontics",
+    availability: "Tue, Thu, Sat",
+    languages: ["English", "Malayalam", "Hindi"],
+    bio: "Designs precise orthodontic plans for teens and adults using aligner-first workflows and outcome simulations.",
+  },
+  {
+    id: "doc-003",
+    slug: "meera-iyer",
+    name: "Dr. Meera Iyer",
+    role: "Pediatric Dental Specialist",
+    specialty: "Child Dentistry and Preventive Care",
+    experience: "9 years",
+    credentials: "MDS Pedodontics",
+    availability: "Mon to Thu",
+    languages: ["English", "Tamil", "Kannada"],
+    bio: "Creates gentle dental visits for children and families with prevention-focused care plans.",
+  },
+];
