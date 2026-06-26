@@ -5,6 +5,8 @@ import type { SessionPayload, SessionUser, UserRole } from "@/types/auth";
 export const SESSION_COOKIE = "dent-ist-session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
+const VALID_ROLES: UserRole[] = ["patient", "admin", "doctor"];
+
 function getJwtSecret() {
   const secret = process.env.JWT_SECRET;
   if (!secret) {
@@ -14,7 +16,7 @@ function getJwtSecret() {
 }
 
 export async function createSessionToken(payload: SessionPayload) {
-  return new SignJWT(payload)
+  return new SignJWT(payload as Record<string, unknown>)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(`${SESSION_MAX_AGE}s`)
@@ -31,15 +33,25 @@ export async function verifySessionToken(token: string) {
     return null;
   }
 
-  if (role !== "patient" && role !== "admin") {
+  if (!VALID_ROLES.includes(role as UserRole)) {
     return null;
   }
 
-  return {
+  const result: SessionPayload = {
     userId,
     email,
     role: role as UserRole,
-  } satisfies SessionPayload;
+  };
+
+  if (typeof payload.name === "string") {
+    result.name = payload.name;
+  }
+
+  if (typeof payload.hospitalId === "string") {
+    result.hospitalId = payload.hospitalId;
+  }
+
+  return result;
 }
 
 export async function setSessionCookie(payload: SessionPayload) {
@@ -75,15 +87,28 @@ export function toSessionUser(user: {
   name: string;
   email: string;
   role: UserRole;
+  hospitalId?: { toString(): string } | string | null;
 }): SessionUser {
   return {
     id: user._id.toString(),
     name: user.name,
     email: user.email,
     role: user.role,
+    hospitalId: user.hospitalId
+      ? typeof user.hospitalId === "string"
+        ? user.hospitalId
+        : user.hospitalId.toString()
+      : undefined,
   };
 }
 
 export function getRedirectForRole(role: UserRole) {
-  return role === "admin" ? "/admin" : "/dashboard";
+  if (role === "admin" || role === "doctor") {
+    return "/admin";
+  }
+  return "/dashboard";
+}
+
+export function isStaffRole(role: UserRole) {
+  return role === "admin" || role === "doctor";
 }

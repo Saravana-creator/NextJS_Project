@@ -23,7 +23,7 @@ export function Button({
   const classes = cn(
     "inline-flex min-h-11 items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5",
     variant === "primary" &&
-      "bg-primary text-white shadow-lg shadow-[rgba(135,54,34,0.22)] hover:bg-primary-dark",
+      "bg-primary text-white shadow-lg shadow-[rgba(11,126,161,0.22)] hover:bg-primary-dark",
     variant === "secondary" &&
       "border border-border bg-white text-foreground hover:border-primary hover:text-primary",
     variant === "ghost" && "text-muted hover:bg-white hover:text-foreground",

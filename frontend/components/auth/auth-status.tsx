@@ -28,7 +28,7 @@ export function AuthStatus() {
     <div className="flex items-center gap-2">
       <Link
         className="hidden text-sm font-semibold text-muted hover:text-primary sm:inline"
-        href={user.role === "admin" ? "/admin" : "/dashboard"}
+        href={["admin", "doctor"].includes(user.role) ? "/admin" : "/dashboard"}
       >
         {user.name}
       </Link>

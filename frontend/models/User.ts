@@ -1,5 +1,10 @@
 import mongoose, { type InferSchemaType, type Model } from "mongoose";
 
+// Force delete stale schema to prevent caching issues in hot-reloads
+if (mongoose.models.User) {
+  delete mongoose.models.User;
+}
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -21,8 +26,18 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["patient", "admin"],
+      enum: ["patient", "admin", "doctor"],
       default: "patient",
+    },
+    phone: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    hospitalId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Hospital",
+      default: null,
     },
   },
   {

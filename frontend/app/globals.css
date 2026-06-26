@@ -1,20 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fff4ea;
-  --foreground: #2f211c;
-  --surface: #fffaf4;
-  --muted: #765f56;
-  --border: #ead8cb;
-  --primary: #c45a3c;
-  --primary-dark: #873622;
-  --teal: #708b75;
-  --green: #7aa35a;
-  --clay: #f2bea6;
-  --clay-light: #fff1e7;
-  --sage: #dce7d4;
-  --warning: #f59e0b;
-  --error: #d94848;
+  --background: #F0FAFE;
+  --foreground: #0B1F2E;
+  --surface: #FFFFFF;
+  --muted: #4A7080;
+  --border: #B2D8E4;
+  --primary: #0B7EA1;
+  --primary-dark: #075F7A;
+  --accent: #22D3EE;
+  --teal-light: #E0F7FA;
+  --gold: #F59E0B;
+  --success: #10B981;
+  --error: #EF4444;
 }
 
 @theme inline {
@@ -25,11 +23,11 @@
   --color-border: var(--border);
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
-  --color-teal: var(--teal);
-  --color-green: var(--green);
-  --color-clay: var(--clay);
-  --color-clay-light: var(--clay-light);
-  --color-sage: var(--sage);
+  --color-accent: var(--accent);
+  --color-teal-light: var(--teal-light);
+  --color-gold: var(--gold);
+  --color-success: var(--success);
+  --color-error: var(--error);
   --font-sans: var(--font-inter);
   --font-display: var(--font-sora);
 }
@@ -45,9 +43,9 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 10% 12%, rgba(196, 90, 60, 0.2), transparent 28rem),
-    radial-gradient(circle at 88% 16%, rgba(112, 139, 117, 0.22), transparent 24rem),
-    linear-gradient(135deg, rgba(255, 250, 244, 0.86), rgba(255, 232, 214, 0.72)),
+    radial-gradient(circle at 10% 12%, rgba(34, 211, 238, 0.15), transparent 28rem),
+    radial-gradient(circle at 88% 16%, rgba(11, 126, 161, 0.12), transparent 24rem),
+    linear-gradient(135deg, #F0FAFE, #FFFFFF),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), Arial, sans-serif;
@@ -66,34 +64,34 @@ textarea {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(196, 90, 60, 0.42);
+  outline: 3px solid rgba(11, 126, 161, 0.42);
   outline-offset: 3px;
 }
 
 .glass {
-  background: linear-gradient(145deg, rgba(255, 250, 244, 0.92), rgba(245, 206, 184, 0.62));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(224, 247, 250, 0.45));
   border: 1px solid rgba(255, 255, 255, 0.72);
   box-shadow:
-    18px 18px 36px rgba(135, 54, 34, 0.14),
-    -14px -14px 30px rgba(255, 255, 255, 0.86),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.76);
+    18px 18px 36px rgba(11, 126, 161, 0.08),
+    -14px -14px 30px rgba(255, 255, 255, 0.9),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(18px);
 }
 
 .soft-card {
   border: 1px solid rgba(255, 255, 255, 0.72);
-  background: linear-gradient(145deg, #fffaf4, #f3d5c5);
+  background: linear-gradient(145deg, #ffffff, #e0f7fa);
   box-shadow:
-    14px 14px 28px rgba(135, 54, 34, 0.12),
-    -12px -12px 24px rgba(255, 255, 255, 0.8),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.78);
+    14px 14px 28px rgba(11, 126, 161, 0.07),
+    -12px -12px 24px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .clay-inset {
-  background: #f7dfd0;
+  background: #e6f7fc;
   box-shadow:
-    inset 8px 8px 16px rgba(135, 54, 34, 0.1),
-    inset -8px -8px 16px rgba(255, 255, 255, 0.78);
+    inset 8px 8px 16px rgba(11, 126, 161, 0.06),
+    inset -8px -8px 16px rgba(255, 255, 255, 0.9);
 }
 
 .reveal {

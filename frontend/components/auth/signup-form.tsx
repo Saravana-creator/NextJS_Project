@@ -26,6 +26,7 @@ export function SignupForm() {
   const { refresh } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,6 +38,13 @@ export function SignupForm() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+
+    // Validate phone pattern locally first
+    const isIndianPhone = /^(?:\+91|0)?[6-9]\d{9}$/.test(phone);
+    if (!isIndianPhone) {
+      setError("Please enter a valid 10-digit Indian mobile number (e.g. 9876543210)");
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -54,7 +62,7 @@ export function SignupForm() {
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, phone, password }),
       });
 
       const result = (await response.json()) as ApiResponse<RegisterResponse>;
@@ -97,6 +105,18 @@ export function SignupForm() {
           onChange={(event) => setEmail(event.target.value)}
           required
           autoComplete="email"
+        />
+      </label>
+      <label className="grid gap-2 text-sm font-semibold">
+        Phone Number
+        <input
+          className="rounded-lg border border-border px-4 py-3"
+          placeholder="e.g. 9876543210"
+          type="tel"
+          value={phone}
+          onChange={(event) => setPhone(event.target.value)}
+          required
+          autoComplete="tel"
         />
       </label>
       <label className="grid gap-2 text-sm font-semibold">

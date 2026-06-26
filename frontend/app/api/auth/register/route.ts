@@ -15,22 +15,26 @@ export async function POST(request: Request) {
       return jsonError(message, 400);
     }
 
-    const { name, email, password } = parsed.data;
+    const { name, email, password, phone } = parsed.data;
+    const normalizedEmail = email.toLowerCase();
 
     await connectDB();
 
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
       return jsonError("An account with this email already exists", 409);
     }
 
     const hashedPassword = await hashPassword(password);
 
+    // All public registrations are patients.
+    // Doctors are created by admin via the admin panel (/admin/doctors).
     const user = await User.create({
       name,
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       password: hashedPassword,
       role: "patient",
+      phone,
     });
 
     await setSessionCookie({

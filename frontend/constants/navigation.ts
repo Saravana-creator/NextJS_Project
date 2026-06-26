@@ -16,8 +16,17 @@ export const dashboardNav = [
   { href: "/dashboard/profile", label: "Profile" },
 ];
 
+export const doctorNav = [
+  { href: "/admin", label: "Overview" },
+  { href: "/admin/appointments", label: "My Appointments" },
+  { href: "/admin/pricing", label: "Manage Pricing" },
+  { href: "/admin/prescriptions", label: "Prescriptions" },
+  { href: "/admin/billing", label: "Billing" },
+];
+
 export const adminNav = [
   { href: "/admin", label: "Overview" },
+  { href: "/admin/hospitals", label: "Hospitals" },
   { href: "/admin/doctors", label: "Doctors" },
   { href: "/admin/patients", label: "Patients" },
   { href: "/admin/appointments", label: "Appointments" },
@@ -25,8 +34,8 @@ export const adminNav = [
   { href: "/admin/blogs", label: "Blogs" },
   { href: "/admin/testimonials", label: "Testimonials" },
   { href: "/admin/gallery", label: "Gallery" },
-  { href: "/admin/pricing", label: "Pricing" },
   { href: "/admin/insurance", label: "Insurance" },
+  { href: "/admin/billing", label: "Billing" },
   { href: "/admin/messages", label: "Messages" },
   { href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/settings", label: "Settings" },

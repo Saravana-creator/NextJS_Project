@@ -9,6 +9,12 @@ type SessionPayload = {
   role: UserRole;
 };
 
+const VALID_ROLES: UserRole[] = ["patient", "admin", "doctor"];
+
+function isStaff(role?: string): role is "admin" | "doctor" {
+  return role === "admin" || role === "doctor";
+}
+
 async function getSession(request: NextRequest): Promise<SessionPayload | null> {
   const token = request.cookies.get(SESSION_COOKIE)?.value;
   if (!token) {
@@ -30,11 +36,11 @@ async function getSession(request: NextRequest): Promise<SessionPayload | null> 
       return null;
     }
 
-    if (role !== "patient" && role !== "admin") {
+    if (!VALID_ROLES.includes(role as UserRole)) {
       return null;
     }
 
-    return { userId, email, role };
+    return { userId, email, role: role as UserRole };
   } catch {
     return null;
   }
@@ -47,25 +53,42 @@ export async function middleware(request: NextRequest) {
   const isAuthPage = pathname === "/login" || pathname === "/signup";
   const isDashboard = pathname.startsWith("/dashboard");
   const isAdmin = pathname.startsWith("/admin");
+  const isAppointment = pathname === "/appointment" || pathname.startsWith("/appointment/");
 
   if (isAuthPage && session) {
-    const redirectTo = session.role === "admin" ? "/admin" : "/dashboard";
+    const redirectTo = isStaff(session.role) ? "/admin" : "/dashboard";
     return NextResponse.redirect(new URL(redirectTo, request.url));
   }
 
-  if ((isDashboard || isAdmin) && !session) {
+  if ((isDashboard || isAdmin || isAppointment) && !session) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isAdmin && session?.role !== "admin") {
+  if (isAdmin && !isStaff(session?.role)) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  if (isAdmin && session?.role === "doctor") {
+    const isAllowedDoctorRoute =
+      pathname === "/admin" ||
+      pathname === "/admin/appointments" ||
+      pathname === "/admin/pricing" ||
+      pathname === "/admin/prescriptions" ||
+      pathname === "/admin/billing";
+    if (!isAllowedDoctorRoute) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+  }
+
+  if (isDashboard && isStaff(session?.role)) {
+    return NextResponse.redirect(new URL("/admin", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*", "/login", "/signup"],
+  matcher: ["/dashboard/:path*", "/admin/:path*", "/appointment/:path*", "/login", "/signup"],
 };

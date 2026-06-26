@@ -11,7 +11,7 @@ export async function getCurrentUser(): Promise<SessionUser | null> {
 
   await connectDB();
 
-  const user = await User.findById(session.userId).select("name email role");
+  const user = await User.findById(session.userId).select("name email role hospitalId");
   if (!user) {
     return null;
   }
