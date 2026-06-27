@@ -120,7 +120,7 @@ export default function PatientBillingPage() {
                   </div>
 
                   <h3 className="mt-4 font-display text-3xl font-extrabold text-foreground">
-                    ${item.amount.toFixed(2)}
+                    ₹{item.amount.toFixed(2)}
                   </h3>
 
                   <div className="mt-5 space-y-2 border-t border-border/30 pt-4 text-xs">

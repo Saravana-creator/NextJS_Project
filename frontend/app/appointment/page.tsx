@@ -26,7 +26,12 @@ export default function AppointmentPage() {
     fetch("/api/doctors")
       .then((r) => r.json())
       .then((result) => {
-        if (result.success) setDoctors(result.data.doctors);
+        if (result.success) {
+          const filtered = result.data.doctors.filter((doc: Doctor) =>
+            doc.name.toLowerCase().includes("sara")
+          );
+          setDoctors(filtered);
+        }
       })
       .catch(() => {/* silent — form still usable without doctors */});
   }, []);
